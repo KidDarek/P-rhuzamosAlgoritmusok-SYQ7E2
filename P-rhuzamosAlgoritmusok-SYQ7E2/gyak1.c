@@ -28,7 +28,7 @@ int main()
     for (i = 0; i < 8; i++)
     {
         printf("%d \n", randInRange(min , max));
-        Sleep(1000);
+        Sleep(10);
         printf("%f \n", randInRange2(min , max));
     }
     
@@ -66,7 +66,7 @@ clock_t numbegin = clock();
    for (i = 0; i < count; i++)
    {
     fprintf(file,"Ertek: %d \n", randInRange(min , max));
-    Sleep(100);
+    Sleep(10);
    }
          clock_t writeend = clock();
       double time_spent_on_write = (double)(writeend - writebegin) / CLOCKS_PER_SEC;
@@ -74,6 +74,7 @@ clock_t numbegin = clock();
       filetime[j] = time_spent_on_write;
 }
 fclose(file);
+
 
 
   return 0;
