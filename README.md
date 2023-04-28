@@ -14,10 +14,15 @@ Where is waldo
 
  ### Posix
  
- - Van egy tetszóleges mennyiségű vödrünk. Aze egyik vödör alatt elbújt egy kiskacsa.
+ - Van n darab vödrünk. Az egyik vödör alatt elbújt egy kiskacsa.
  - Minden egyes körben egy vödröt emelhetünk fel, amennyiben a kiskacsa nem ott van akkor valamelyik szomszédos vödörbe átmegy.
- - A feladat a kiskacsa megtalálása több különböző algroitmus segítségévél
+ - A feladat a kiskacsa megtalálása.
+ - A párhuzamosítás több különböző algroitmus egy időben való futattásával történik
  
  ### Tetszőleges
  
- 
+ - OpenMP segítségével párhuzamosítunk
+ - Veszünk egy szöveges file-t
+ - A feladat elején bekérünk egy betűt
+ - Végig megyünk a file-on keresve ezt a betűt (párhuzamosítva és a nélkül is)
+ - Végig mérjük az időt és a végén ki írjuk ezt és a betű előforulásának számát
