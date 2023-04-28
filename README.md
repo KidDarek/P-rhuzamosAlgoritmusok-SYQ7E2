@@ -14,9 +14,9 @@ Where is waldo
 
  ### Posix
  
- Van tetőleges hosszúságú vödrünk. Aze egyik vödör alatt elbújt egy kiskacsa.
- Minden egyes körben egy vödröt emelhetünk fel, amennyiben a kiskacsa nem ott van akkor valamelyik szomszédos vödörbe átmegy.
- A feladat a kiskacsa megtalálása több különböző algroitmus segítségévél
+ - Van egy tetszóleges mennyiségű vödrünk. Aze egyik vödör alatt elbújt egy kiskacsa.
+ - Minden egyes körben egy vödröt emelhetünk fel, amennyiben a kiskacsa nem ott van akkor valamelyik szomszédos vödörbe átmegy.
+ - A feladat a kiskacsa megtalálása több különböző algroitmus segítségévél
  
  ### Tetszőleges
  
