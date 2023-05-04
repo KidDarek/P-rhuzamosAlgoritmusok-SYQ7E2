@@ -23,6 +23,6 @@ Where is waldo
  
  - OpenMP segítségével párhuzamosítunk
  - Veszünk egy szöveges file-t
- - A feladat elején bekérünk egy betűt
+ - Parancssorból argumentumként bekérünk egy betűt
  - Végig megyünk a file-on keresve ezt a betűt (párhuzamosítva és a nélkül is)
  - Végig mérjük az időt és a végén ki írjuk ezt és a betű előforulásának számát
