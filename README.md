@@ -21,7 +21,7 @@ Where is waldo
  
  ### Tetszőleges
  
- - OpenMP segítségével párhuzamosítunk
+ - C# ban párhuzamosítunk (TPL)
  - Veszünk egy szöveges file-t
  - Parancssorból argumentumként bekérünk egy betűt
  - Végig megyünk a file-on keresve ezt a betűt (párhuzamosítva és a nélkül is)
