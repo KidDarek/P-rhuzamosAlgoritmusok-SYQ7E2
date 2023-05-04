@@ -23,6 +23,6 @@ Where is waldo
  
  - C# ban párhuzamosítunk (TPL)
  - Veszünk egy szöveges file-t
- - Parancssorból argumentumként bekérünk egy betűt
+ - Bekérünk egy betűt
  - Végig megyünk a file-on keresve ezt a betűt (párhuzamosítva és a nélkül is)
  - Végig mérjük az időt és a végén ki írjuk ezt és a betű előforulásának számát
