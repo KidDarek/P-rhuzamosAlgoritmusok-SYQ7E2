@@ -6,7 +6,7 @@
 
 Where is waldo
 
-- Adott egy 3 dimenziós mátrix melynek minden vektorának hossza tetszőleg amit feltöltünk elemekkel (ebben az esetben 0-kal), ahol elrejtjük (aki itt egy 1-es) Waldót.
+- Adott egy 3 dimenziós mátrix melynek minden vektorának hossza tetszőleg, amit feltöltünk elemekkel (ebben az esetben 0-kal), ahol elrejtjük (aki itt egy 1-es) Waldót.
 - A mátrix-on végig megyünk egy lineáris kereséssel majd egy párhuzamosított kereséssel mérve a futási időt.
 - A program futása előtt meg tudjuk adni hogy Waldo hányszor bújjon el úrja.
 - Amennyiben megtalálták a keresés nem kezdődik újra az 0,0,0 pozícióból.
