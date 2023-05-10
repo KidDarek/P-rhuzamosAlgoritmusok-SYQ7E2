@@ -15,7 +15,7 @@ Where is waldo
  ### Posix
  
  - Van n darab vödrünk. Az egyik vödör alatt elbújt egy kiskacsa.
- - Minden egyes körben egy vödröt emelhetünk fel, amennyiben a kiskacsa nem ott van akkor valamelyik szomszédos vödörbe átmegy.
+ - Minden egyes körben egy vödröt emelhetünk fel, amennyiben a kiskacsa nem ott van akkor valamelyik szomszédos vödörbe átmegy (már vizsgált vödrökbe is bemehet).
  - A feladat a kiskacsa megtalálása.
  - A párhuzamosítás több különböző algroitmus egy időben való futattásával történik
  
