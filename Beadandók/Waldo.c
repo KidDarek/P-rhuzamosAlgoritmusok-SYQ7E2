@@ -10,7 +10,6 @@
 void LinearFindWaldo(int matrixX, int matrixY, int matrixZ, int matrix[matrixX][matrixY][matrixZ], int waldo)
 {
     int found = 0;
-    printf("%d", waldo);
     while (waldo != found)
     {
         for (int i = 0; i < matrixX; i++)
@@ -26,10 +25,14 @@ void LinearFindWaldo(int matrixX, int matrixY, int matrixZ, int matrix[matrixX][
                         matrix[k][j][i] = 0;
                         matrix[rand() % matrixX][rand() % matrixY][rand() % matrixZ] = 1;
                     }
+                    if (waldo == found)
+                    {
+                        i = matrixX;
+                        j = matrixY;
+                        k = matrixZ;
+                    }
                 }
-                //Sokszor fut le
-                
-
+                // Sokszor fut le
             }
         }
     }
@@ -48,9 +51,9 @@ int main()
     int waldo;
     printf("X lenght of the matrix: ");
     scanf("%d", &x);
-        printf("Y lenght of the matrix: ");
+    printf("Y lenght of the matrix: ");
     scanf("%d", &y);
-        printf("Z lenght of the matrix: ");
+    printf("Z lenght of the matrix: ");
     scanf("%d", &z);
     printf("How many times should Waldo hide: ");
     scanf("%d", &waldo);
@@ -81,37 +84,49 @@ int main()
     LinearFindWaldo(x, y, z, matrix, waldo);
     clock_t end = clock();
     printf("\n");
-    printf("runtime: %d", (double)(end - start) / CLOCKS_PER_SEC);
+    double linRun = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("runtime: %f \n", (double)(end - start) / CLOCKS_PER_SEC);
 
     clock_t start2 = clock();
 
     int found = 0;
-/*#pragma omp for
-for (int q = 0; q < 1; q++)
-{
- while (found != waldo)
+#pragma omp for
+    for (int q = 0; q < 1; q++)
     {
-        for (int i = 0; i < x; i++)
+        while (found != waldo)
         {
-            for (int j = 0; j < y; j++)
+            for (int i = 0; i < x; i++)
             {
-                for (int k = 0; k < z; k++)
+                for (int j = 0; j < y; j++)
                 {
-                    if (matrix[k][j][i] == 1)
+                    for (int k = 0; k < z; k++)
                     {
-                        printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
-                        found++;
-                        matrix[k][j][i] = 0;
-                        matrix[rand() % x][rand() % y][rand() % z] = 1;
+                        if (matrix[k][j][i] == 1)
+                        {
+                            printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
+                            found++;
+                            matrix[k][j][i] = 0;
+                            matrix[rand() % x][rand() % y][rand() % z] = 1;
+                        }
+                        if (waldo == found)
+                        {
+                            i = x;
+                            j = y;
+                            k = z;
+                        }
                     }
                 }
             }
         }
     }
-}
 
     clock_t end2 = clock();
-    printf("runtime: %d", (double)(end2 - start2) / CLOCKS_PER_SEC);
-*/
+    double parRun = (double)(end2 - start2) / CLOCKS_PER_SEC;
+    printf("runtime: %f \n", (double)(end2 - start2) / CLOCKS_PER_SEC);
+    printf("\n");
+    printf("Runtime: %f \n", linRun);
+    printf("\n");
+    printf("Runtime: %f \n", parRun);
+
     return 0;
 }
