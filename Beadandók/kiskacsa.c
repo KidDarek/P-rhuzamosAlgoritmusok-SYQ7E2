@@ -7,6 +7,10 @@
 #include <omp.h>
 #include <windows.h>
 
+void GuarantedLinearSearch(int length, int buckets[length], int checked, int currentBucket)
+{
+}
+
 int main()
 {
     srand(time(NULL));

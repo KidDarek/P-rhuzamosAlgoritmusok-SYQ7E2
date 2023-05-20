@@ -10,6 +10,9 @@
 void LinearFindWaldo(int matrixX, int matrixY, int matrixZ, int matrix[matrixX][matrixY][matrixZ], int waldo)
 {
     int found = 0;
+    int newx;
+    int newy;
+    int newz;
     while (waldo != found)
     {
         for (int i = 0; i < matrixX; i++)
@@ -18,12 +21,16 @@ void LinearFindWaldo(int matrixX, int matrixY, int matrixZ, int matrix[matrixX][
             {
                 for (int k = 0; k < matrixZ; k++)
                 {
-                    if (matrix[k][j][i] == 1)
+                    if (matrix[i][j][k] == 1)
                     {
                         printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
                         found++;
-                        matrix[k][j][i] = 0;
-                        matrix[rand() % matrixX][rand() % matrixY][rand() % matrixZ] = 1;
+                        matrix[i][j][k] = 0;
+                        newx = rand() % matrixX;
+                        newy = rand() % matrixY;
+                        newz = rand() % matrixZ;
+                        matrix[newx][newy][newz] = 1;
+                        printf(" %d %d %d \n", newx, newy, newz);
                     }
                     if (waldo == found)
                     {
@@ -61,6 +68,7 @@ int main()
     int a = rand() % x;
     int b = rand() % y;
     int c = rand() % z;
+    printf(" %d %d %d \n", a, b, c);
     for (int i = 0; i < x; i++)
     {
         for (int j = 0; j < y; j++)
@@ -101,11 +109,11 @@ int main()
                 {
                     for (int k = 0; k < z; k++)
                     {
-                        if (matrix[k][j][i] == 1)
+                        if (matrix[i][j][k] == 1)
                         {
                             printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
                             found++;
-                            matrix[k][j][i] = 0;
+                            matrix[i][j][k] = 0;
                             matrix[rand() % x][rand() % y][rand() % z] = 1;
                         }
                         if (waldo == found)
