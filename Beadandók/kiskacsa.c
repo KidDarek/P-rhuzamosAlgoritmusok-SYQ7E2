@@ -266,8 +266,8 @@ int main()
 */
 
     pthread_t threads[5];
-    int th1 = pthread_create(&threads[0], NULL, GuarantedLinearSearch, &data);
-    int th2 = pthread_create(&threads[1], NULL, HopSearch, &data);
+    pthread_create(&threads[0], NULL, GuarantedLinearSearch(data), NULL);
+    pthread_create(&threads[1], NULL, HopSearch(data), NULL);
     /*  int th3 = pthread_create(&threads[2], NULL, FullLinear, [ n, buckets, duckfirstlocaltion ]);
       int th4 = pthread_create(&threads[3], NULL, HalvingLinear, [ n, buckets, duckfirstlocaltion ]);
       int th5 = pthread_create(&threads[4], NULL, FullRandom, [ n, buckets, duckfirstlocaltion ]);
