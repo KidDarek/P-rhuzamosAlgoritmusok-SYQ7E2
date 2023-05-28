@@ -1,0 +1,8 @@
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\bin\Debug\Textsearch.exe.config
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\bin\Debug\Textsearch.exe
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\bin\Debug\Textsearch.pdb
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\obj\Debug\Textsearch.csproj.AssemblyReference.cache
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\obj\Debug\Textsearch.csproj.SuggestedBindingRedirects.cache
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\obj\Debug\Textsearch.csproj.CoreCompileInputs.cache
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\obj\Debug\Textsearch.exe
+J:\Egyetem\github\P-rhuzamosAlgoritmusok-SYQ7E2\Beadandók\Textsearch\Textsearch\obj\Debug\Textsearch.pdb
