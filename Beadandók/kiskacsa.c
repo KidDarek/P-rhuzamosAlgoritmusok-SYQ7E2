@@ -7,6 +7,8 @@
 #include <omp.h>
 #include <windows.h>
 
+int found = 0;
+
 typedef struct Data
 {
     int length;
@@ -58,157 +60,221 @@ void GenerateDuck(int length, int *buckets, int duckStartLocation)
     }
 }
 
-void GuarantedLinearSearch(Data data)
+/* void *GuarantedLinearSearch(void *param)
 {
-    int newLocation = data.duckLocation;
+    Data *data = (Data *)param;
+    int newLocation = data->duckLocation;
     // printf("Duck %d \n", newLocation);
     // printf("Our local %d \n", currentBucket);
-    if (data.buckets[data.currentBucket] == 1)
+    if (data->buckets[data->currentBucket] == 1)
     {
-        printf("The Duck Has Been Found On %d !!! \n", data.currentBucket);
+        printf("The Duck Has Been Found On %d !!! (Gar)\n", data->currentBucket);
     }
     else
     {
-        data.buckets[newLocation] = 0;
-        newLocation = RelocateDuck(newLocation, data.length);
-        data.buckets[newLocation] = 1;
-        if (data.checked < data.clength)
+        data->buckets[newLocation] = 0;
+        newLocation = RelocateDuck(newLocation, data->length);
+        data->buckets[newLocation] = 1;
+        if (data->checked < data->clength)
         {
-            data.checked += 1;
+            data->checked += 1;
         }
         else
         {
-            data.checked = 0;
-            data.clength--;
-            data.currentBucket++;
+            data->checked = 0;
+            data->clength--;
+            data->currentBucket++;
         }
-        data.duckLocation = newLocation;
-        GuarantedLinearSearch(data);
+        data->duckLocation = newLocation;
+        GuarantedLinearSearch((void *)data);
+    }
+}
+*/
+void *GuarantedLinearSearch(void *param)
+{
+    Data *data = (Data *)param;
+    int newLocation = data->duckLocation;
+    // printf("Duck %d \n", newLocation);
+    // printf("Our local %d \n", currentBucket);
+    while (found != 1)
+    {
+        if (found == 1)
+        {
+            pthread_exit(NULL);
+        }
+
+        if (data->buckets[data->currentBucket] == 1)
+        {
+            printf("The Duck Has Been Found On %d !!! (Gar)\n", data->currentBucket);
+            found = 1;
+        }
+        else
+        {
+            data->buckets[newLocation] = 0;
+            newLocation = RelocateDuck(newLocation, data->length);
+            data->buckets[newLocation] = 1;
+            if (data->checked < data->clength)
+            {
+                data->checked += 1;
+            }
+            else
+            {
+                data->checked = 0;
+                data->clength--;
+                data->currentBucket++;
+            }
+        }
     }
 }
 
-void HopSearch(Data data)
+void *HopSearch(void *param)
 {
-    int newLocation = data.duckLocation;
-    while (data.currentBucket < data.length)
+    Data *data = (Data *)param;
+    int newLocation = data->duckLocation;
+    while (data->currentBucket < data->length)
     {
-        if (data.buckets[data.currentBucket] == 1)
+        if (found == 1)
         {
-            printf("The Duck Has Been Found On %d !!!\n", data.currentBucket);
+            pthread_exit(NULL);
+        }
+        if (data->buckets[data->currentBucket] == 1)
+        {
+            printf("The Duck Has Been Found On %d !!! (Hop)\n", data->currentBucket);
+            found = 1;
             break;
         }
         else
         {
             // printf("Duck %d \n", newLocation);
             // printf("Our local %d \n", currentBucket);
-            data.currentBucket += 2;
-            data.buckets[newLocation] = 0;
-            newLocation = RelocateDuck(newLocation, data.length);
-            data.buckets[newLocation] = 1;
+            data->currentBucket += 2;
+            data->buckets[newLocation] = 0;
+            newLocation = RelocateDuck(newLocation, data->length);
+            data->buckets[newLocation] = 1;
         }
-        if (data.buckets[data.currentBucket] == 1)
+        if (data->buckets[data->currentBucket] == 1)
         {
-            printf("The Duck Has Been Found On %d !!!\n", data.currentBucket);
+            printf("The Duck Has Been Found On %d !!! (Hop)\n", data->currentBucket);
+            found = 1;
             break;
         }
         else
         {
             // printf("Duck %d \n", newLocation);
             // printf("Our local %d \n", currentBucket);
-            data.currentBucket--;
-            data.buckets[newLocation] = 0;
-            newLocation = RelocateDuck(newLocation, data.length);
-            data.buckets[newLocation] = 1;
+            data->currentBucket--;
+            data->buckets[newLocation] = 0;
+            newLocation = RelocateDuck(newLocation, data->length);
+            data->buckets[newLocation] = 1;
         }
     }
-    if (data.currentBucket >= data.length)
+    if (data->currentBucket >= data->length)
     {
-        printf("Couldn't find it :c\n");
+        printf("Couldn't find it :c (Hop)\n");
     }
 }
 
-void FullLinear(int length, int *buckets, int duckLocation)
+void *FullLinear(void *param)
 {
-    int newLocation = duckLocation;
+    Data *data = (Data *)param;
+    int newLocation = data->duckLocation;
     int i;
-    for (i = 0; i < length; i++)
+    for (i = 0; i < data->length; i++)
     {
+        if (found == 1)
+        {
+            pthread_exit(NULL);
+        }
         // printf("Duck %d \n", newLocation);
         // printf("Our local %d \n", i);
-        if (buckets[i] == 1)
+        if (data->buckets[i] == 1)
         {
-            printf("The Duck Has Been Found On %d !!!\n", i);
-            i = length + 1;
+            printf("The Duck Has Been Found On %d !!! (Lin)\n", i);
+            i = data->length + 1;
+            found = 1;
         }
-        buckets[newLocation] = 0;
-        newLocation = RelocateDuck(newLocation, length);
-        buckets[newLocation] = 1;
+        data->buckets[newLocation] = 0;
+        newLocation = RelocateDuck(newLocation, data->length);
+        data->buckets[newLocation] = 1;
     }
-    if (i == length)
+    if (i == data->length)
     {
-        printf("Couldn't find it :c\n");
+        printf("Couldn't find it :c (Lin)\n");
     }
 }
 
-void HalvingLinear(int length, int *buckets, int duckLocation)
+void *HalvingLinear(void *param)
 {
-    int newLocation = duckLocation;
+    Data *data = (Data *)param;
+    int newLocation = data->duckLocation;
     int i;
-    for (i = length / 2; i > 0; i--)
+    for (i = data->length / 2; i > 0; i--)
     {
+        if (found == 1)
+        {
+            pthread_exit(NULL);
+        }
         // printf("Duck %d \n", newLocation);
         // printf("Our local %d \n", i);
-        if (buckets[i] == 1)
+        if (data->buckets[i] == 1)
         {
-            printf("The Duck Has Been Found On %d !!!\n", i);
+            printf("The Duck Has Been Found On %d !!! (Half)\n", i);
             i = -1;
+            found = 1;
         }
-        buckets[newLocation] = 0;
-        newLocation = RelocateDuck(newLocation, length);
-        buckets[newLocation] = 1;
+        data->buckets[newLocation] = 0;
+        newLocation = RelocateDuck(newLocation, data->length);
+        data->buckets[newLocation] = 1;
     }
     if (i == 0)
     {
-        for (i = length / 2; i < length; i++)
+        for (i = data->length / 2; i < data->length; i++)
         {
             // printf("Duck %d \n", newLocation);
             // printf("Our local %d \n", i);
-            if (buckets[i] == 1)
+            if (data->buckets[i] == 1)
             {
-                printf("The Duck Has Been Found On %d !!!\n", i);
-                i = length + 1;
+                printf("The Duck Has Been Found On %d !!! (Half)\n", i);
+                i = data->length + 1;
+                found = 1;
             }
-            buckets[newLocation] = 0;
-            newLocation = RelocateDuck(newLocation, length);
-            buckets[newLocation] = 1;
+            data->buckets[newLocation] = 0;
+            newLocation = RelocateDuck(newLocation, data->length);
+            data->buckets[newLocation] = 1;
         }
-        if (i == length)
+        if (i == data->length)
         {
-            printf("Couldn't find it :c\n");
+            printf("Couldn't find it :c (half)\n");
         }
     }
 }
 
-void FullRandom(int length, int *buckets, int duckLocation)
+void *FullRandom(void *param)
 {
-    int newLocation = duckLocation;
+    Data *data = (Data *)param;
+    int newLocation = data->duckLocation;
     int i;
-    for (i = 0; i < length; i++)
+    for (i = 0; i < data->length; i++)
     {
+        if (found == 1)
+        {
+            pthread_exit(NULL);
+        }
         // printf("Duck %d \n", newLocation);
         // printf("Our local %d \n", i);
-        if (buckets[rand() % length] == 1)
+        if (data->buckets[rand() % data->length] == 1)
         {
-            printf("The Duck Has Been Found On %d !!!\n", i);
-            i = length + 1;
+            printf("The Duck Has Been Found On %d !!! (Rand)\n", i);
+            found = 1;
+            i = data->length + 1;
         }
-        buckets[newLocation] = 0;
-        newLocation = RelocateDuck(newLocation, length);
-        buckets[newLocation] = 1;
+        data->buckets[newLocation] = 0;
+        newLocation = RelocateDuck(newLocation, data->length);
+        data->buckets[newLocation] = 1;
     }
-    if (i == length)
+    if (i == data->length)
     {
-        printf("Couldn't find it :c\n");
+        printf("Couldn't find it :c (Rand)\n");
     }
 }
 
@@ -220,65 +286,73 @@ int main()
     scanf("%d", &n);
     int buckets[n];
     int duckfirstlocaltion = rand() % n;
+    printf("%d \n", duckfirstlocaltion);
     double RunT;
-    Data data;
-    data.buckets = buckets;
-    data.length = n;
-    data.checked = 0;
-    data.clength = n;
-    data.currentBucket = 0;
-    data.duckLocation = duckfirstlocaltion;
-    /*
+    Data data[5];
+    for (int i = 0; i < 6; i++)
+    {
+        data[i].buckets = buckets;
+        data[i].length = n;
+        data[i].checked = 0;
+        data[i].clength = n;
+        data[i].currentBucket = 0;
+        data[i].duckLocation = duckfirstlocaltion;
+    }
     GenerateDuck(n, buckets, duckfirstlocaltion);
+
     clock_t start1 = clock();
-    GuarantedLinearSearch(data);
+    //  GuarantedLinearSearch((void *)&data[5]);
     clock_t end1 = clock();
     RunT = (double)(end1 - start1) / CLOCKS_PER_SEC;
     printf("runtime: %f \n", RunT);
+    /*
+        GenerateDuck(n, buckets, duckfirstlocaltion);
+        clock_t start2 = clock();
+        HopSearch(data);
+        clock_t end2 = clock();
+        RunT = (double)(end2 - start2) / CLOCKS_PER_SEC;
+        printf("runtime: %f \n", RunT);
+
+        GenerateDuck(n, buckets, duckfirstlocaltion);
+        clock_t start3 = clock();
+        FullLinear(n, buckets, duckfirstlocaltion);
+        clock_t end3 = clock();
+        RunT = (double)(end3 - start3) / CLOCKS_PER_SEC;
+        printf("runtime: %f \n", RunT);
+        //
+        GenerateDuck(n, buckets, duckfirstlocaltion);
+        clock_t start4 = clock();
+        HalvingLinear(n, buckets, duckfirstlocaltion);
+        clock_t end4 = clock();
+        RunT = (double)(end4 - start4) / CLOCKS_PER_SEC;
+        printf("runtime: %f \n", RunT);
+        //
+        GenerateDuck(n, buckets, duckfirstlocaltion);
+        clock_t start5 = clock();
+        FullRandom(n, buckets, duckfirstlocaltion);
+        clock_t end5 = clock();
+        RunT = (double)(end5 - start5) / CLOCKS_PER_SEC;
+        printf("runtime: %f \n", RunT);
     */
-    GenerateDuck(n, buckets, duckfirstlocaltion);
+    found = 0;
+    pthread_t threads[5];
     clock_t start2 = clock();
-    HopSearch(data);
+    pthread_create(&threads[0], NULL, GuarantedLinearSearch, (void *)&data[0]);
+    GenerateDuck(n, buckets, duckfirstlocaltion);
+    pthread_create(&threads[1], NULL, HopSearch, (void *)&data[1]);
+    GenerateDuck(n, buckets, duckfirstlocaltion);
+    pthread_create(&threads[2], NULL, FullLinear, (void *)&data[2]);
+    GenerateDuck(n, buckets, duckfirstlocaltion);
+    pthread_create(&threads[3], NULL, HalvingLinear, (void *)&data[3]);
+    GenerateDuck(n, buckets, duckfirstlocaltion);
+    pthread_create(&threads[4], NULL, FullRandom, (void *)&data[4]);
+    for (int i = 0; i < 5; i++)
+    {
+        pthread_join(threads[i], NULL);
+    }
+
     clock_t end2 = clock();
     RunT = (double)(end2 - start2) / CLOCKS_PER_SEC;
     printf("runtime: %f \n", RunT);
-    /*
-    GenerateDuck(n, buckets, duckfirstlocaltion);
-    clock_t start3 = clock();
-    FullLinear(n, buckets, duckfirstlocaltion);
-    clock_t end3 = clock();
-    RunT = (double)(end3 - start3) / CLOCKS_PER_SEC;
-    printf("runtime: %f \n", RunT);
-    //
-    GenerateDuck(n, buckets, duckfirstlocaltion);
-    clock_t start4 = clock();
-    HalvingLinear(n, buckets, duckfirstlocaltion);
-    clock_t end4 = clock();
-    RunT = (double)(end4 - start4) / CLOCKS_PER_SEC;
-    printf("runtime: %f \n", RunT);
-    //
-    GenerateDuck(n, buckets, duckfirstlocaltion);
-    clock_t start5 = clock();
-    FullRandom(n, buckets, duckfirstlocaltion);
-    clock_t end5 = clock();
-    RunT = (double)(end5 - start5) / CLOCKS_PER_SEC;
-    printf("runtime: %f \n", RunT);
-*/
-
-    pthread_t threads[5];
-    pthread_create(&threads[0], NULL, GuarantedLinearSearch(data), NULL);
-    pthread_create(&threads[1], NULL, HopSearch(data), NULL);
-    /*  int th3 = pthread_create(&threads[2], NULL, FullLinear, [ n, buckets, duckfirstlocaltion ]);
-      int th4 = pthread_create(&threads[3], NULL, HalvingLinear, [ n, buckets, duckfirstlocaltion ]);
-      int th5 = pthread_create(&threads[4], NULL, FullRandom, [ n, buckets, duckfirstlocaltion ]);
-      if (th1 == 0 || th2 == 0 || th3 == 0 || th4 == 0 || th5 == 0)
-      {
-          int pthread_cancel(pthread_t threads[0]);
-          int pthread_cancel(pthread_t threads[1]);
-          int pthread_cancel(pthread_t threads[2]);
-          int pthread_cancel(pthread_t threads[3]);
-          int pthread_cancel(pthread_t threads[4]);
-      }
-  */
     return 0;
 }
