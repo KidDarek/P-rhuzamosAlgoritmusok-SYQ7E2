@@ -45,6 +45,14 @@ int RelocateDuck(int duckLocation, int length)
     return newLocation;
 }
 
+void FillArray(int *Array, int *Source, int length)
+{
+    for (int i = 0; i < length; i++)
+    {
+        Array[i] = Source[i];
+    }
+}
+
 void GenerateDuck(int length, int *buckets, int duckStartLocation)
 {
     for (int i = 0; i < length; i++)
@@ -254,17 +262,22 @@ void *FullRandom(void *param)
     Data *data = (Data *)param;
     int newLocation = data->duckLocation;
     int i;
+    unsigned long index;
     for (i = 0; i < data->length; i++)
     {
+        index = rand();
+        index <<= 15;
+        index ^= rand();
+        index %= data->length;
         if (found == 1)
         {
             pthread_exit(NULL);
         }
         // printf("Duck %d \n", newLocation);
         // printf("Our local %d \n", i);
-        if (data->buckets[rand() % data->length] == 1)
+        if (data->buckets[index] == 1)
         {
-            printf("The Duck Has Been Found On %d !!! (Rand)\n", i);
+            printf("The Duck Has Been Found On %d !!! (Rand)\n", index);
             found = 1;
             i = data->length + 1;
         }
@@ -285,23 +298,28 @@ int main()
     printf("How manny buckets should there be? : ");
     scanf("%d", &n);
     int buckets[n];
-    int duckfirstlocaltion = rand() % n;
+    unsigned long duckfirstlocaltion;
+    duckfirstlocaltion = rand();
+    duckfirstlocaltion <<= 15;
+    duckfirstlocaltion ^= rand();
+    duckfirstlocaltion %= n;
     printf("%d \n", duckfirstlocaltion);
     double RunT;
     Data data[5];
+    GenerateDuck(n, buckets, duckfirstlocaltion);
     for (int i = 0; i < 6; i++)
     {
-        data[i].buckets = buckets;
+        data[i].buckets = malloc(sizeof(int) * n);
+        FillArray(data[i].buckets, buckets, n);
         data[i].length = n;
         data[i].checked = 0;
         data[i].clength = n;
         data[i].currentBucket = 0;
         data[i].duckLocation = duckfirstlocaltion;
     }
-    GenerateDuck(n, buckets, duckfirstlocaltion);
 
     clock_t start1 = clock();
-    //  GuarantedLinearSearch((void *)&data[5]);
+    // GuarantedLinearSearch((void *)&data[5]);
     clock_t end1 = clock();
     RunT = (double)(end1 - start1) / CLOCKS_PER_SEC;
     printf("runtime: %f \n", RunT);
