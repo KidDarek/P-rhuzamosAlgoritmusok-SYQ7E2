@@ -23,14 +23,14 @@ void LinearFindWaldo(int matrixX, int matrixY, int matrixZ, int matrix[matrixX][
                 {
                     if (matrix[i][j][k] == 1)
                     {
-                        printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
+                        // printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
                         found++;
                         matrix[i][j][k] = 0;
                         newx = rand() % matrixX;
                         newy = rand() % matrixY;
                         newz = rand() % matrixZ;
                         matrix[newx][newy][newz] = 1;
-                        printf(" %d %d %d \n", newx, newy, newz);
+                        // printf(" %d %d %d \n", newx, newy, newz);
                     }
                     if (waldo == found)
                     {
@@ -68,7 +68,7 @@ int main()
     int a = rand() % x;
     int b = rand() % y;
     int c = rand() % z;
-    printf(" %d %d %d \n", a, b, c);
+    // printf(" %d %d %d \n", a, b, c);
     for (int i = 0; i < x; i++)
     {
         for (int j = 0; j < y; j++)
@@ -93,7 +93,7 @@ int main()
     clock_t end = clock();
     printf("\n");
     double linRun = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("runtime: %f \n", (double)(end - start) / CLOCKS_PER_SEC);
+    // printf("runtime: %f \n", (double)(end - start) / CLOCKS_PER_SEC);
 
     clock_t start2 = clock();
 
@@ -111,7 +111,7 @@ int main()
                     {
                         if (matrix[i][j][k] == 1)
                         {
-                            printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
+                            // printf("Waldo is on the %d. X value, %d. Y value and %d. Z value \n", k + 1, j + 1, i + 1);
                             found++;
                             matrix[i][j][k] = 0;
                             matrix[rand() % x][rand() % y][rand() % z] = 1;
@@ -130,11 +130,11 @@ int main()
 
     clock_t end2 = clock();
     double parRun = (double)(end2 - start2) / CLOCKS_PER_SEC;
-    printf("runtime: %f \n", (double)(end2 - start2) / CLOCKS_PER_SEC);
+    // printf("runtime: %f \n", (double)(end2 - start2) / CLOCKS_PER_SEC);
+    // printf("\n");
+    printf("Linear Runtime: %f \n", linRun);
     printf("\n");
-    printf("Runtime: %f \n", linRun);
-    printf("\n");
-    printf("Runtime: %f \n", parRun);
+    printf("Parallel Runtime: %f \n", parRun);
 
     return 0;
 }

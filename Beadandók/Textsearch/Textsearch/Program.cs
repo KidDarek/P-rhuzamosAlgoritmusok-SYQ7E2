@@ -16,7 +16,7 @@ namespace Textsearch
             Console.WriteLine("What letter should i check for? ");
             char c = Console.ReadLine()[0];
             int counter = 0;
-            int multiplier = 1000;
+            int multiplier = 100000;
             Stopwatch sw = new Stopwatch();
             sw.Start();
             for (int k = 0; k < multiplier; k++)
